@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task Manager</title>
+	<style>
+		h1 {
+			margin: 10px 0px;
+			margin-top: 5px;
+			margin-bottom: 15px;
+			padding: 10px 10px;
+			border-top: 2px solid blue;
+			border-bottom: 2px solid blue;
+			background-color: lightblue;
+		}
+		#ulTaskList li{
+			list-style: none;
+			margin-top: 5px;
+			margin-bottom: 5px;
+			padding: 2px;
+			border: 1px solid gray;
+			background-color: lightgray;
+			width: 300px;
+		}
+	</style>
+	<script>
+		function addTask(){
+		  var txtTask = document.getElementById("txtTask");
+		  var newTaskItem = "<li>" + txtTask.value + "</li>";
+		  document.getElementById("ulTaskList").innerHTML += newTaskItem;
+		  displayMessage("A new task is added");
+		}
+
+		function initialize(){
+			var btnAddTask = document.getElementById("btnAdd");
+			btnAddTask.onclick = addTask;
+		}
+		function displayMessage(msg){
+			document.getElementById("divMessage").innerText = msg;
+		}
+
+		window.onload = initialize;
+
+	</script>
+</head>
+<body>
+	<h1>Task Manager</h1>
+	<span>Task :</span>
+	<input type="text" name="" id="txtTask">
+	<input type="button" value="Add Task" id="btnAdd">
+	<input type="button" value="Remove Completed" id="btnRemove">
+	<ul id="ulTaskList">
+		
+	</ul>
+	<div id="divMessage"></div>
+</body>
+</html>

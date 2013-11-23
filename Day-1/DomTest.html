@@ -3,12 +3,30 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Dom Test</title>
+	<style>
+	* {
+		color : red;
+	}
+	input {
+		color : blue;
+	}
+	div span{
+		color: green;
+	}
+	.txtInput{
+		background-color: pink;
+	}
+	#txtId {
+		border : 2px solid gray;
+	}
+	</style>
 </head>
 <body>
 	<h1>DOM TEST</h1>
-	<input type="text" name="" id="txtId">
-	<input type="text" name="" id="txtName">
+	<span>This is a span</span>
+	<input class="txtInput" type="text" name="" id="txtId">
+	<input class="txtInput" type="text" name="" id="txtName">
 	<input type="button" value="Test" id="btnTest">
-	<div id="divMessage"></div>
+	<div id="divMessage"><span>This is a span inside a div</span></div>
 </body>
 </html>
