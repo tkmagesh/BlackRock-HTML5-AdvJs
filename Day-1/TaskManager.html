@@ -21,6 +21,14 @@
 			border: 1px solid gray;
 			background-color: lightgray;
 			width: 300px;
+			cursor: pointer;
+		}
+		#ulTaskList li.completed {
+			font-style: italic;
+			text-decoration: line-through;
+			color: red;
+			border-color: red;
+			background-color: white;
 		}
 	</style>
 	<script>
@@ -34,10 +42,21 @@
 		function initialize(){
 			var btnAddTask = document.getElementById("btnAdd");
 			btnAddTask.onclick = addTask;
+			initializeTaskHandlers();
 		}
 		function displayMessage(msg){
 			document.getElementById("divMessage").innerText = msg;
 		}
+		function initializeTaskHandlers(){
+			var allListItems = document.querySelectorAll("#ulTaskList li");
+			for(var i=0;i<allListItems.length;i++)
+			  allListItems[i].onclick = onTaskItemClick;
+		}
+		function onTaskItemClick(){
+			console.dir(this.classList);
+			this.classList.add("completed");
+		}
+
 
 		window.onload = initialize;
 
@@ -50,7 +69,9 @@
 	<input type="button" value="Add Task" id="btnAdd">
 	<input type="button" value="Remove Completed" id="btnRemove">
 	<ul id="ulTaskList">
-		
+		<li class="something">Task -1</li>
+		<li>Task -2</li>
+		<li>Task -3</li>
 	</ul>
 	<div id="divMessage"></div>
 </body>
