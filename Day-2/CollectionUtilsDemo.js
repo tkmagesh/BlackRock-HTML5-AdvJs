@@ -10,12 +10,69 @@ var products = [
 function display(products){
 	for(var i=0;i<products.length;i++){
 		var product = products[i];
-		console.log("id=",product.id, "name=", product.name, "units=",product.units, "cost=", product.cost, "category=", product.category);
+		console.log("id=",product["id"], "name=", product.name, "units=",product.units, "cost=", product.cost, "category=", product.category);
 	}
 };
 
-function sort(products){
-	//sorts products by id
+function sort(products, productComparerFn){
+	for(var i=0;i<products.length-1;i++)
+		for(var j=i+1;j<products.length;j++){
+			var left = products[i], right = products[j];
+			if (productComparerFn(left,right) > 0){
+				var temp = left;
+				products[i] = products[j];
+				products[j] = temp;
+			}
+		}
+}
+
+function sort(products, attrName){
+	for(var i=0;i<products.length-1;i++)
+		for(var j=i+1;j<products.length;j++){
+			var left = products[i], right = products[j];
+			if (left[attrName] > right[attrName]){
+				var temp = left;
+				products[i] = products[j];
+				products[j] = temp;
+			}
+		}
+}
+
+function sort(products, comparer){
+	var comparerFn = typeof comparer === "function" ? comparer : function(l,r){ 
+		if (l[comparer] > r[comparer]) return 1;
+		if (l[comparer] < r[comparer]) return -1;
+		return 0;
+	};
+	for(var i=0;i<products.length-1;i++)
+		for(var j=i+1;j<products.length;j++){
+			var left = products[i], right = products[j];
+			if (comparerFn(left,right) > 0){
+				var temp = left;
+				products[i] = products[j];
+				products[j] = temp;
+			}
+		}
+}
+
+function filter(list,criteriaFn){
+	var result = [];
+	for(var i=0;i<list.length;i++)
+		if (criteriaFn(list[i])) result.push(list[i]);
+	return result;
+}
+
+function groupBy(list,keySelector){
+	var result = {};
+	var keySelectorFn = typeof keySelector === "function" ? keySelector : function(item){
+		return item[keySelector];
+	};
+	for(var i=0;i<list.length;i++){
+		var key = keySelectorFn(list[i]);
+		if (!result[key]) result[key] = [];
+		result[key].push(list[i]);
+	}
+	return result;
 }
 
 display(products); //should print the product list sorted by id
