@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator</title>
+	<script src="jquery-1.10.2.js"></script>
+	<script>
+	$(document).ready(function(){
+		$("input:text").change(function(){
+			var $this = $(this);
+			if ($this.val() === '') {
+				$this.css({
+					border : "2px solid red",
+					backgroundColor : "lightpink"
+				});
+			} else {
+				$this.css({
+					border : "",
+					backgroundColor : ""
+				});
+			}	
+		});
+		$("#btnCalculate").click(function(){
+			if ($("#txtNumber1").val() !== '' && $("#txtNumber2").val() !== ''){
+				$("#divResult").html(eval($("#txtNumber1").val() + $("#selectOperator").val() + $("#txtNumber2").val()));
+			} 
+		})
+	})
+
+	</script>
+</head>
+<body>
+	<input type="text" name="" id="txtNumber1">
+	<select name="" id="selectOperator">
+		<option value="+">Add</option>
+		<option value="-">Subtract</option>
+		<option value="/">Divide</option>
+		<option value="*">Multiply</option>
+	</select>
+	<input type="text" name="" id="txtNumber2">
+	<input type="button" value="Calculate" id="btnCalculate">
+	<div id="divResult"></div>
+</body>
+</html>
