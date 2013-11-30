@@ -4,6 +4,13 @@
 	<meta charset="UTF-8">
 	<title>Task Manager</title>
 	<style>
+		#divMessage{
+			position: absolute;
+			border : 2px solid black;
+			padding : 10px;
+			right : 0px;
+			bottom: 0px;
+		}
 		h1 {
 			margin: 10px 0px;
 			margin-top: 5px;
@@ -35,65 +42,41 @@
 			font-style: italic;
 		}
 	</style>
+	<script src="jquery-1.10.2.js"></script>
 	<script>
 	(function(){
 		function addTask(){
-		  var txtTask = document.getElementById("txtTask");
-		  var newTaskItem = document.createElement("li");
-		  newTaskItem.innerText = txtTask.value;
-		  newTaskItem.addEventListener("click",onTaskItemClick);
-		  document.getElementById("ulTaskList").appendChild(newTaskItem);
+		  $("<li>")
+		  	.text($("#txtTask").val())
+		  	.hide()
+		  	.appendTo("#ulTaskList")
+		  	.slideDown('slow');
 		  displayMessage("A new task is added");
 		}
 
-		function initialize(){
-			var btnAddTask = document.getElementById("btnAdd");
-			btnAddTask.addEventListener("click",addTask);
-			document.getElementById("btnRemove").onclick = onRemoveCompletedClick;
-			initializeTaskHandlers();
-			
-		}
+		$(function(){
+			$("#btnAdd").on('click',addTask);
+			$("#btnRemove").click(onRemoveCompletedClick);
+			$("#ulTaskList").on('click','li',onTaskItemClick);
+			$("#divMessage").css('bottom', -$("#divMessage").outerHeight(true));
+		});
+
 		function displayMessage(msg){
-			var divMessage = document.getElementById("divMessage");
-			divMessage.style.opacity = 1;
-			divMessage.innerText = msg;
-			setTimeout(function(){
-				var currentOpacity = 1;
-				function reduceOpacity(){
-					divMessage.style.opacity = currentOpacity;
-					currentOpacity -= 0.05;
-					if (currentOpacity > 0){
-						setTimeout(reduceOpacity,20)
-					} else {
-						divMessage.style.opacity = 0;
-					}
-				}
-				reduceOpacity();
-			},3000);
+			//$("#divMessage").text(msg).show().delay(3000).fadeOut(400);
+			$("#divMessage").text(msg).animate({
+				bottom : 0
+			},400).delay(3000).animate({bottom : -$("#divMessage").outerHeight(true)},400);
 		}
-		function initializeTaskHandlers(){
-			var allListItems = document.querySelectorAll("#ulTaskList li");
-			/*myLib.each(allListItems, function(){
-				this.addEventListener("click",onTaskItemClick);	
-			});*/
-			for(var i=0;i<allListItems.length;i++)
-			  allListItems[i].addEventListener("click",onTaskItemClick);
-		}
+		
 		function onTaskItemClick(){
-			if (this.classList.contains("completed")){
-				this.classList.remove("completed");
-			} else {
-				this.classList.add("completed");
-			}
+			$(this).toggleClass("completed");
 		}
+
 		function onRemoveCompletedClick(){
-			var allTaskItems = document.querySelectorAll("#ulTaskList li.completed");
-			for(var i=0;i<allTaskItems.length;i++){
-					allTaskItems[i].remove();
-			}
+			$("#ulTaskList > li.completed").fadeOut('slow',function(){
+				$(this).remove();
+			});
 		}
-	
-		window.addEventListener("DOMContentLoaded",initialize);
 	}());
 
 	</script>
@@ -101,7 +84,7 @@
 <body>
 	<h1>Task Manager</h1>
 	<span>Task :</span>
-	<input type="text" name="" id="txtTask">
+	<input type="text" name="" id="txtTask" >
 	<input type="button" value="Add Task" id="btnAdd">
 	<input type="button" value="Remove Completed" id="btnRemove">
 	<ul id="ulTaskList">
