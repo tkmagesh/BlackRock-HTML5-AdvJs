@@ -66,7 +66,7 @@ function circlesWithArc() {
         var elem = document.getElementById('canvas');
         canvas = elem.getContext('2d');
         canvas.beginPath();
-        canvas.arc(100, 100, 50, 0, Math.PI * 2, false);
+        canvas.arc(100, 100, 50, 0, Math.PI, true);
         canvas.stroke();
 
     }
@@ -129,7 +129,7 @@ function circlesWithArc() {
         canvas.shadowColor = "rgba(128,128,128,0.5)";
         canvas.shadowOffsetX = 5;
         canvas.shadowOffsetY = 5;
-        canvas.shadowBlur = 0;
+        canvas.shadowBlur = 5;
         canvas.font = "bold 50px verdana, sans-serif";
         canvas.fillText("my message", 100, 100);
     }
