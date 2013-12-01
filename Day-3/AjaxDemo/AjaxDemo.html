@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax Demo</title>
+	<script src="jquery-1.10.2.js"></script>
+	<script>
+	$(function(){
+		$("#btnLoad").click(function(){
+			/*$.get('partial.html',function(res){
+				$("#divContent").append(res);
+			},"html");*/
+		
+			$("#divContent").load('partial.html');
+		});
+	});
+	</script>
+</head>
+<body>
+	<input type="button" value="Load Partial HTML" id="btnLoad">
+	<div id="divContent"></div>
+</body>
+</html>
