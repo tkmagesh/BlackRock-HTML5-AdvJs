@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" manifest="app.manifest">
+<head>
+	<meta charset="UTF-8">
+	<title>Task Manager</title>
+	<style>
+	#updateMsg {
+		display : none;
+	}
+	</style>
+	<script>
+		window.applicationCache.onupdateready = function(){
+			document.getElementById("btnReload").onclick = function(){
+				window.location.reload();
+			};
+			document.getElementById("btnCancel").onclick = function(){
+				document.getElementById("updateMsg").style.display = "none";	
+			}
+			document.getElementById("updateMsg").style.display = "block";
+		};
+	</script>
+	<script src="jquery-1.10.2.js"></script>
+	<script src="TaskStorage.js"></script>
+	<script src="TaskManager.js"></script>
+	<link rel="stylesheet" href="TaskManager.css">
+	<link rel="stylesheet" href="TaskManager-online.css">
+</head>
+<body>
+	<h1>Task Manager - V1.1</h1>
+	<span>Task :</span>
+	<input type="text" name="" id="txtTask">
+	<input type="button" value="Add Task" id="btnAddTask">
+	<input type="button" value="Remove Completed" id="btnRemoveCompleted">
+	<ul id="ulTaskList">
+		
+	</ul>
+	<div id="divMessage"></div>
+	<div id="updateMsg">
+		A new verion of the application is downloaded. Do you want to use it? <input type="button" value="Yes" id="btnReload"><input type="button" value="Cancel" id="btnCancel">
+	</div>
+</body>
+</html>

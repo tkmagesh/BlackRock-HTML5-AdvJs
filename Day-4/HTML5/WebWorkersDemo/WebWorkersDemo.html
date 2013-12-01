@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Workers Demo</title>
+	<script>
+	(function(){
+		window.onload = initialize;
+		var worker = new Worker("ComplexWork.js");
+		function initialize(){
+			document.getElementById("btnDoWork").onclick = onBtnDoWorkClick;
+		}
+		function onBtnDoWorkClick(){
+			
+			worker.onmessage = function(msgEvt){
+				var response = msgEvt.data;
+				if (response.type === "completed"){
+					displayMessage("Work Completed");
+				} else if (response.type === "progress"){
+					displayProgress(response.percentCompleted);
+				}
+			}
+
+			worker.postMessage("start");
+			displayMessage("Work Started");
+		}
+		function displayProgress(percentCompleted){
+			document.getElementById("progress").value = percentCompleted;
+		}
+		function displayMessage(msg){
+			document.getElementById("divMessages").innerHTML += "<br/>" + msg;
+		}
+	}());
+	</script>
+</head>
+<body>
+	<input type="text" name="" id="">
+	<input type="button" value="Do Work" id="btnDoWork">
+	<br>
+	<progress id="progress" min="0" max="100" value="0"></progress>
+	<div id="divMessages"></div>
+</body>
+</html>
