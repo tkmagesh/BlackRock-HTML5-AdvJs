@@ -3,6 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Ajax Demo</title>
+	<style>
+		table{
+			border : 1px solid black;
+
+		}
+		td{
+			padding : 5px;
+		}
+	</style>
 	<script src="jquery-1.10.2.js"></script>
 	<script>
 	$(function(){
@@ -10,14 +19,50 @@
 			/*$.get('partial.html',function(res){
 				$("#divContent").append(res);
 			},"html");*/
-		
+
 			$("#divContent").load('partial.html');
 		});
+		$("#btnLoadProducts").click(function(){
+			var template = "<tr><td>{id}</td><td>{name}</td><td>{price}</td></tr>";
+		
+			/*$.get("products.json",function(res){
+				var $result = $("<table>");
+				$.each(res,function(){
+					$result.append(template.replace("{id}",this.id).replace("{name}",this.name).replace("{price}",this.price));
+				})
+				$("#divContent").append($result);
+			},"json");*/
+		
+			/*$.getJSON("products.json",function(res){
+					var $result = $("<table>");
+					$.each(res,function(){
+						$result.append(template.replace("{id}",this.id).replace("{name}",this.name).replace("{price}",this.price));
+					})
+					$("#divContent").append($result);
+				});*/
+
+			$.ajax({
+				url : "products.json",
+				type : 'get',
+				contentType : "application/json",
+				/*dataType : 'json',
+				data : '{}',*/
+				success : function(res){
+					var $result = $("<table>");
+					$.each(res,function(){
+						$result.append(template.replace("{id}",this.id).replace("{name}",this.name).replace("{price}",this.price));
+					})
+					$("#divContent").append($result);
+				}
+			});
+		})
 	});
 	</script>
 </head>
 <body>
+	
 	<input type="button" value="Load Partial HTML" id="btnLoad">
+	<input type="button" value="Load Products" id="btnLoadProducts">
 	<div id="divContent"></div>
 </body>
 </html>
